@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personal Logo Architect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+.container {
+    background: rgba(255,255,255,0.08);
+    padding: 30px;
+    border-radius: 20px;
+    width: 380px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+}
+
+button {
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg,#ff9800,#ff5722);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#logoCard {
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 18px;
+    background: white;
+    color: black;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#logoIcon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+#logoText {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+#downloadBtn {
+    margin-top: 18px;
+    background: #4caf50;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎨 Logo Architect</h1>
+
+    <input type="text" id="name" placeholder="Business Name">
+
+    <select id="vibe">
+        <option value="modern">Modern</option>
+        <option value="luxury">Luxury</option>
+        <option value="playful">Playful</option>
+        <option value="tech">Tech</option>
+        <option value="vintage">Vintage</option>
+    </select>
+
+    <button onclick="generateLogo()">Generate Logo</button>
+
+    <div id="logoCard">
+        <div id="logoIcon"></div>
+        <div id="logoText"></div>
+        <button id="downloadBtn" onclick="downloadLogo()">Download Logo</button>
+    </div>
+</div>
+
+<script>
+function generateLogo() {
+    const name = document.getElementById("name").value;
+    const vibe = document.getElementById("vibe").value;
+    const card = document.getElementById("logoCard");
+    const text = document.getElementById("logoText");
+    const icon = document.getElementById("logoIcon");
+
+    if(name === "") {
+        alert("Enter business name!");
+        return;
+    }
+
+    let font = "";
+    let bg = "";
+    let color = "";
+    let emoji = "";
+
+    switch(vibe) {
+        case "modern":
+            font = "Arial, sans-serif";
+            bg = "#f5f5f5";
+            color = "#111";
+            emoji = "⬛";
+            break;
+
+        case "luxury":
+            font = "Georgia, serif";
+            bg = "#000";
+            color = "gold";
+            emoji = "👑";
+            break;
+
+        case "playful":
+            font = "Comic Sans MS, cursive";
+            bg = "#ffeb3b";
+            color = "#e91e63";
+            emoji = "🎨";
+            break;
+
+        case "tech":
+            font = "Courier New, monospace";
+            bg = "#212121";
+            color = "#00e5ff";
+            emoji = "⚡";
+            break;
+
+        case "vintage":
+            font = "Times New Roman, serif";
+            bg = "#d7ccc8";
+            color = "#4e342e";
+            emoji = "📜";
+            break;
+    }
+
+    card.style.background = bg;
+    card.style.color = color;
+    text.style.fontFamily = font;
+    text.innerHTML = name.toUpperCase();
+    icon.innerHTML = emoji;
+
+    card.style.display = "block";
+}
+
+function downloadLogo() {
+    const element = document.getElementById("logoCard");
+    html2canvas(element).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "logo.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>
